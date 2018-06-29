@@ -74,7 +74,7 @@ def render_data_request(url, output_type):
         # Prints json formatted data
         print(dfs.to_json(orient="records", date_format="iso"))
     elif output_type == "csv":
-        dfs.to_csv("output_files/" +str(time.time()) + "_stocks", sep=",")
+        dfs.to_csv("output_files/" + str(time.time()) + "_stocks", sep=",")
     elif output_type == "table":
         # Prints table formatted data
         print(dfs)
@@ -82,10 +82,9 @@ def render_data_request(url, output_type):
         # Prints table formatted data
         print(dfs)
 
-
 # Initial requests
 # You can also initially call render_data_request() for dynamic url request under the base url
-get_stock_list("csv")
+# get_stock_list("csv")
 # get_top_gainers("table")
 # get_worst_losers("table")
 # get_most_active("table")
