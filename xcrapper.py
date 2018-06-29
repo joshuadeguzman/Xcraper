@@ -14,6 +14,14 @@ def str_join(*args):
     return ''.join(map(str, args))
 
 
+def get_stock_list(output_type):
+    """
+    Calls stock list via specified url
+    """
+    url = 'stock'
+    render_data_request(url, output_type)
+
+
 def get_top_gainers(output_type):
     """
     Calls top gainers via specified url
@@ -70,6 +78,7 @@ def render_data_request(url, output_type):
 
 # Initial requests
 # You can also initially call render_data_request() for dynamic url request under the base url
+get_stock_list("table")
 get_top_gainers("table")
 get_worst_losers("table")
 get_most_active("table")
