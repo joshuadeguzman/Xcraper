@@ -14,20 +14,38 @@ def str_join(*args):
     return ''.join(map(str, args))
 
 
-def get_top_gainers():
+def get_top_gainers(output_type):
     """
-    Calls top gainers url when called
+    Calls top gainers via specified url
     """
-    top_gainers_url = 'reports/top-gainers'
-    render_data_request(top_gainers_url)
+    url = 'reports/top-gainers'
+    render_data_request(url, output_type)
 
 
-def render_data_request(url):
+def get_worst_losers(output_type):
     """
-    Returns output in json format
+    Calls worst gainers via specified url
+    """
+    url = 'reports/worst-losers'
+    render_data_request(url, output_type)
+
+
+def get_most_active(output_type):
+    """
+    Calls most active via specified url
+    """
+    url = 'reports/most-active'
+    render_data_request(url, output_type)
+
+
+def render_data_request(url, output_type):
+    """
+    Returns data base output_type format
     :param url: Url request based on request' sub path
     :type url: str
-    :return: outputs json formatted request of the data
+    :param output_type: Requested output type
+    :type: output_type: str
+    :return: prints formatted output_type request of the data
     """
     url = str_join(baseUrl, url)
 
@@ -36,11 +54,22 @@ def render_data_request(url):
         "X-Requested-With": "XMLHttpRequest"
     }
 
-    r = requests.get(url, header=header)
+    r = requests.get(url, header)
 
     dfs, = pd.read_html(r.text)
-    print(dfs.to_json(orient="records", date_format="iso"))
+    if output_type == "json":
+        # Prints json formatted data
+        print(dfs.to_json(orient="records", date_format="iso"))
+    elif output_type == "table":
+        # Prints table formatted data
+        print(dfs)
+    else:
+        # Prints table formatted data
+        print(dfs)
 
 
 # Initial requests
-get_top_gainers()
+# You can also initially call render_data_request() for dynamic url request under the base url
+get_top_gainers("table")
+get_worst_losers("table")
+get_most_active("table")
