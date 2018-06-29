@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+import time
 
 baseUrl = 'http://www.pesobility.com/'
 
@@ -64,10 +65,16 @@ def render_data_request(url, output_type):
 
     r = requests.get(url, header)
 
+    # pd configurations before usage
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.max_rows', None)
+
     dfs, = pd.read_html(r.text)
     if output_type == "json":
         # Prints json formatted data
         print(dfs.to_json(orient="records", date_format="iso"))
+    elif output_type == "csv":
+        dfs.to_csv("output_files/" +str(time.time()) + "_stocks", sep=",")
     elif output_type == "table":
         # Prints table formatted data
         print(dfs)
@@ -78,7 +85,7 @@ def render_data_request(url, output_type):
 
 # Initial requests
 # You can also initially call render_data_request() for dynamic url request under the base url
-get_stock_list("table")
-get_top_gainers("table")
-get_worst_losers("table")
-get_most_active("table")
+get_stock_list("csv")
+# get_top_gainers("table")
+# get_worst_losers("table")
+# get_most_active("table")
