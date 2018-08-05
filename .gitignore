@@ -151,3 +151,4 @@ fabric.properties
 
 # Application specific stuffs:
 output_files/
+xcr_test.py
